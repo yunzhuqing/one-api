@@ -12,7 +12,6 @@ import (
 	"github.com/songquanpeng/one-api/middleware"
 	"net/http"
 	"strings"
-	"os"
 )
 
 func SetWebRouter(router *gin.Engine, buildFS embed.FS) {
