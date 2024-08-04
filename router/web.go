@@ -20,11 +20,7 @@ func SetWebRouter(router *gin.Engine, buildFS embed.FS) {
 	router.Use(gzip.Gzip(gzip.DefaultCompression))
 	router.Use(middleware.GlobalWebRateLimit())
 	router.Use(middleware.Cache())
-	webBase := os.Getenv("APP_WEB_BASE")
-	if webBase == "" {
-	    webBase = "/"
-	}
-	router.Use(static.Serve(webBase, common.EmbedFolder(buildFS, fmt.Sprintf("web/build/%s", config.Theme))))
+	router.Use(static.Serve("/", common.EmbedFolder(buildFS, fmt.Sprintf("web/build/%s", config.Theme))))
 	router.NoRoute(func(c *gin.Context) {
 		if strings.HasPrefix(c.Request.RequestURI, "/v1") || strings.HasPrefix(c.Request.RequestURI, "/api") {
 			controller.RelayNotFound(c)
